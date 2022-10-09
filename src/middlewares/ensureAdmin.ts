@@ -1,30 +1,23 @@
-import { NextFunction, Request, Response } from 'express';
-import { verify } from 'jsonwebtoken';
+import { Request, Response, NextFunction } from 'express';
+import { getCustomRepository } from 'typeorm';
+import { UsersRepositories } from '../repositories/UserRepositories';
 
-interface IPayload {
-  sub: string;
-}
-
-export function ensureAuthenticated(
+export async function ensureAdmin(
   request: Request,
   response: Response,
   next: NextFunction
 ) {
-  const token = request.headers.authorization;
+  const { user_id } = request;
 
-  if (!token) {
-    return response.status(401).json({
-      error: 'Unauthorized',
-    }); 
+  const usersRepositories = getCustomRepository(UsersRepositories);
+
+  const { admin } = await usersRepositories.findOne(user_id);
+
+  if (admin) {
+    return next();
   }
 
-try {
-    const { sub } = verify(token.split(" ")[1], process.env.SECRET_KEY) as IPayload;
-    request.user_id = sub;
-} catch (err) {
-    return response.status(401).json({
-      error: 'Unauthorized',
-    });
-}
-  return next();
+  return response.status(401).json({
+    error: 'Unauthorized. You must be an admin to access this',
+  });
 }
