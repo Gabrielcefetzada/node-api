@@ -22,7 +22,7 @@ class AuthenticateUserService {
       throw new Error('Email or/and Password incorrect');
     }
 
-    const token = sign({ email: user.email }, process.env.SECRET_BCRYPT, {
+    const token = sign({ email: user.email }, process.env.SECRET_JWT, {
       subject: user.id,
       expiresIn: '1d',
     });

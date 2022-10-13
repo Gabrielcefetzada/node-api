@@ -19,7 +19,7 @@ export function ensureAuthenticated(
   }
 
 try {
-    const { sub } = verify(token.split(" ")[1], process.env.SECRET_KEY) as IPayload;
+    const { sub } = verify(token.split(" ")[1], process.env.SECRET_JWT) as IPayload;
     request.user_id = sub;
 } catch (err) {
     return response.status(401).json({
