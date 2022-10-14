@@ -11,21 +11,19 @@ export class CreateUserTokens1665697048644 implements MigrationInterface {
                         name: 'id',
                         type: 'uuid',
                         isPrimary: true,
-                        generationStrategy: 'uuid',
                     },
                     {
                         name: 'refresh_token',
-                        type: 'uuid',
-                        generationStrategy: 'uuid',
+                        type: 'string',
                     },
                     {
                         name: 'user_id',
                         type: 'uuid',
                     },
+
                     {
-                        name: 'created_at',
-                        type: 'timestamp',
-                        default: 'now()',
+                        name: 'expires_date',
+                        type: 'timestamp'
                     },
 
                     {
