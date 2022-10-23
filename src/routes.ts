@@ -6,6 +6,7 @@ import { CreateComplimentController } from "./controllers/ComplimentsController"
 import { ensureAuthenticated } from "./middlewares/ensureAuthenticated";
 import { ensureAdmin } from "./middlewares/ensureAdmin";
 import { RefreshTokenController } from "./controllers/RefreshTokenController";
+import { GetTagsController } from "./controllers/GetTagsController";
 
 const router = Router();
 
@@ -14,11 +15,14 @@ const createTagController = new CreateTagController();
 const authenticateUserController = new AuthController();
 const createComplimentController = new CreateComplimentController();
 const refreshTokenController = new RefreshTokenController();
+const getTagsController = new GetTagsController();
 
 router.post("/users", createUserController.handle);
 router.post("/tags", ensureAuthenticated, ensureAdmin, createTagController.handle);
 router.post("/login", authenticateUserController.handle);
 router.post("/compliment", ensureAuthenticated, createComplimentController.handle);
 router.post("/refresh-token", refreshTokenController.handle); 
+
+router.get("/tags", ensureAuthenticated, getTagsController.handle);
 
 export { router };

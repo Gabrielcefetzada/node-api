@@ -12,7 +12,7 @@ class RefreshTokenService {
 
     const userTokenRepository = getCustomRepository(UserTokenRepositories);
 
-    const { email, sub } = verify(
+    const { sub } = verify(
       refresh_token,
       process.env.REFRESH_TOKEN_SECRET_JWT
     ) as IPayload;
@@ -34,15 +34,6 @@ class RefreshTokenService {
       id: userToken.id,
     });
 
-    const new_refresh_token = sign(
-      { email: email },
-      process.env.REFRESH_TOKEN_SECRET_JWT,
-      {
-        subject: sub,
-        expiresIn: '16s',
-      }
-    );
-
     const refresh_token_expires_date = dayjs().add(1, 'days').toDate();
 
     const refresh_token_created = await userTokenRepository.create({
@@ -55,7 +46,7 @@ class RefreshTokenService {
 
     const newToken = sign({}, process.env.SECRET_JWT, {
       subject: user_id,
-      expiresIn: '10s',
+      expiresIn: '1h',
     });
 
     return { refresh_token, token: newToken };

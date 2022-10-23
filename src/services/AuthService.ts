@@ -27,12 +27,12 @@ class AuthenticateUserService {
 
     const token = sign({ email: user.email }, process.env.SECRET_JWT, {
       subject: user.id,
-      expiresIn: '10s',
+      expiresIn: '1h',
     }); 
 
     const refresh_token = sign({ email: user.email }, process.env.REFRESH_TOKEN_SECRET_JWT, {
       subject: user.id,
-      expiresIn: '16m',
+      expiresIn: '1d',
     });
 
     const refresh_token_expires_date = dayjs().add(1, 'days').toDate();
