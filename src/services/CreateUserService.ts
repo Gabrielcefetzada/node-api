@@ -2,18 +2,14 @@ import { UsersRepositories } from "../repositories/UserRepositories";
 import { getCustomRepository } from "typeorm";
 import { hash } from "bcryptjs";
 
-interface IUserRequest extends IUserIsAdmin {
+interface IUserRequest {
     name: string;
     email: string;
     password: string;
 }
 
-interface IUserIsAdmin {
-    admin: boolean;
-}
-
 class CreateUserService {
-    async execute({ name, email, admin, password }: IUserRequest) {
+    async execute({ name, email, password }: IUserRequest) {
         const emailFormat =
             /^[a-zA-Z0-9_.+]*[a-zA-Z][a-zA-Z0-9_.+]*@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
 
@@ -36,7 +32,6 @@ class CreateUserService {
         const user = usersRepository.create({
             name,
             email,
-            admin,
             password: passwordHash,
         });
 
