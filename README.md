@@ -1,6 +1,6 @@
-# Esse repositório serve para mim mesmo, como banco meu de `CONHECIMENTO`
+## Esse repositório serve para mim mesmo, como banco meu de `CONHECIMENTO`
 
-## Nesse repositório atualmente você vai encontrar:
+## Atualmente você vai encontrar:
 
 * Geração de cobrança para pagamentos por PIX
 * Arquitetura limpa de Bob Martin
